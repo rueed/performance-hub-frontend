@@ -1,0 +1,145 @@
+/* =====================================================================
+   Shared theme for the whole project (light colors only).
+   Everyone uses these variables and classes. Do NOT write hex colors
+   inside your own page CSS: use var(--name) instead.
+   Owner of this file: the team (tell the others before changing it).
+   ===================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* colors */
+  --bg: #f5f7fb;          /* page background */
+  --surface: #ffffff;     /* cards, forms, tables */
+  --border: #e3e7ef;
+  --text: #1f2430;
+  --text-muted: #667085;
+
+  --primary: #4f6ef7;
+  --primary-hover: #3f5ce0;
+  --primary-soft: #eaeefe;
+
+  --success: #2f8f5b;
+  --warning: #d9961a;
+  --danger: #d64545;
+  --info: #3b82c4;
+  --purple: #6b4fd8;
+  --neutral: #7a7a8c;
+
+  /* shape and spacing */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --font: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+/* ---------- reset ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-3);
+  color: var(--text);
+}
+
+h1 { font-size: 26px; }
+h2 { font-size: 20px; }
+h3 { font-size: 17px; }
+
+/* ---------- layout ---------- */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  padding: 8px 14px;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn:hover { background: var(--primary-hover); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-secondary:hover { background: var(--primary-soft); }
+
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #b93636; }
+
+/* ---------- form fields ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 14px;
+}
+
+.input {
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.input:focus {
+  outline: 2px solid var(--primary-soft);
+  border-color: var(--primary);
+}
+
+/* ---------- messages ---------- */
+.error-text { color: var(--danger); }
+.muted-text { color: var(--text-muted); }
+
+/* ---------- status badges ---------- */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #fff;
+  background: var(--neutral);
+  white-space: nowrap;
+}
+.badge-success { background: var(--success); }
+.badge-warning { background: var(--warning); }
+.badge-danger  { background: var(--danger); }
+.badge-info    { background: var(--info); }
+.badge-purple  { background: var(--purple); }
