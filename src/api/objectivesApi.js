@@ -18,19 +18,18 @@ export function createObjective(data) {
 }
 
 // POST /api/objectives/{id}/submit  (Draft or Rejected -> PendingApproval)
-// NOTE: this endpoint is not written in the backend yet.
 export function submitObjective(id) {
   return apiRequest(`/api/objectives/${id}/submit`, { method: 'POST' });
 }
 
 // PATCH /api/objectives/{id}/progress  body: { progress: 0-100 }
-// NOTE: this endpoint is not written in the backend yet.
 export function updateProgress(id, progress) {
   return apiRequest(`/api/objectives/${id}/progress`, {
     method: 'PATCH',
     body: JSON.stringify({ progress }),
   });
 }
+
 // GET /api/objectives/pending  (Manager only: objectives of my team waiting for approval)
 export function getPendingObjectives() {
   return apiRequest('/api/objectives/pending');
@@ -47,4 +46,9 @@ export function rejectObjective(id, reason) {
     method: 'POST',
     body: JSON.stringify({ reason }),
   });
+}
+
+// GET /api/objectives/team  (Manager only: all objectives of my team, any status)
+export function getTeamObjectives() {
+  return apiRequest('/api/objectives/team');
 }
