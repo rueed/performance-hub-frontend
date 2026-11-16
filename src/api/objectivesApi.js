@@ -31,3 +31,20 @@ export function updateProgress(id, progress) {
     body: JSON.stringify({ progress }),
   });
 }
+// GET /api/objectives/pending  (Manager only: objectives of my team waiting for approval)
+export function getPendingObjectives() {
+  return apiRequest('/api/objectives/pending');
+}
+
+// POST /api/objectives/{id}/approve  (Manager only)
+export function approveObjective(id) {
+  return apiRequest(`/api/objectives/${id}/approve`, { method: 'POST' });
+}
+
+// POST /api/objectives/{id}/reject  body: { reason }  (Manager only)
+export function rejectObjective(id, reason) {
+  return apiRequest(`/api/objectives/${id}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({ reason }),
+  });
+}
