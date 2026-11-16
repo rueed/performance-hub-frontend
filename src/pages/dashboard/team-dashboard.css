@@ -1,0 +1,21 @@
+.team-table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-4);
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.team-table th,
+.team-table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.team-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+}
