@@ -1,32 +1,23 @@
-// Temporary demo page: only to check that the shared theme looks right.
-// Whoever builds the real routing replaces this file.
-function App() {
-  return (
-    <div className="page">
-      <h1>Performance Hub</h1>
-      <p className="muted-text">Theme check: this page must look light.</p>
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/auth/LoginPage';
+import HomePage from './pages/home/HomePage';
+import AppLayout from './components/AppLayout';
+import UsersPage from './pages/admin/UsersPage';
+import DepartmentsPage from './pages/admin/DepartmentsPage';
 
-      <div className="card">
-        <h3>Sample card</h3>
-        <p>
-          <span className="badge badge-warning">Pending</span>{' '}
-          <span className="badge badge-success">Approved</span>{' '}
-          <span className="badge badge-danger">Rejected</span>
-        </p>
-
-        <div className="field">
-          <label htmlFor="demo">Sample input</label>
-          <input id="demo" className="input" placeholder="Type here" />
-        </div>
-
-        <p>
-          <button className="btn">Primary</button>{' '}
-          <button className="btn btn-secondary">Secondary</button>{' '}
-          <button className="btn btn-danger">Danger</button>
-        </p>
-      </div>
-    </div>
-  );
+export default function App() {
+  return <Routes>
+    <Route path="/login" element={<LoginPage />} />
+    <Route element={<ProtectedRoute />}>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
+          <Route path="/admin/users" element={<UsersPage />} />
+          <Route path="/admin/departments" element={<DepartmentsPage />} />
+        </Route>
+      </Route>
+    </Route>
+    <Route path="*" element={<Navigate to="/" replace />} />
+  </Routes>;
 }
-
-export default App;
