@@ -1,15 +1,16 @@
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Icon from '../../components/Icon';
 import './home.css';
 
-// Connect destinations once teammates' routes are integrated.
+// destination: where "Open ..." goes. null = not integrated yet.
 const services = [
   {
     name: 'Performance',
     icon: 'performance',
     description:
       'Manage objectives, track progress, and access performance evaluations.',
-    destination: null,
+    destination: '/performance',
   },
   {
     name: 'Timesheet',
@@ -98,9 +99,11 @@ export default function HomePage() {
                   />
                 </span>
 
-                <span className="home-coming">
-                  Coming soon
-                </span>
+                {!service.destination && (
+                  <span className="home-coming">
+                    Coming soon
+                  </span>
+                )}
               </div>
 
               <h3>
@@ -111,25 +114,41 @@ export default function HomePage() {
                 {service.description}
               </p>
 
-              <button
-                className="btn btn-secondary home-service-action"
-                disabled
-                aria-describedby={`service-${service.icon}-status`}
-              >
-                Open {service.name}
+              {service.destination ? (
+                <Link
+                  className="btn btn-secondary home-service-action"
+                  to={service.destination}
+                >
+                  Open {service.name}
 
-                <Icon
-                  name="arrow"
-                  size={18}
-                />
-              </button>
+                  <Icon
+                    name="arrow"
+                    size={18}
+                  />
+                </Link>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-secondary home-service-action"
+                    disabled
+                    aria-describedby={`service-${service.icon}-status`}
+                  >
+                    Open {service.name}
 
-              <small
-                id={`service-${service.icon}-status`}
-                className="muted-text"
-              >
-                This service will be available once integrated.
-              </small>
+                    <Icon
+                      name="arrow"
+                      size={18}
+                    />
+                  </button>
+
+                  <small
+                    id={`service-${service.icon}-status`}
+                    className="muted-text"
+                  >
+                    This service will be available once integrated.
+                  </small>
+                </>
+              )}
             </article>
           ))}
         </div>

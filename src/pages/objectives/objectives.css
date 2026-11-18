@@ -1,0 +1,162 @@
+/* Styles for the objectives page only.
+   Colors, spacing and radius come from the shared theme (src/styles/theme.css):
+   use var(--name), never hex colors. Class names are unique to this page
+   so they do not collide with the login page, the dashboard or the timesheet. */
+
+.objectives-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  text-align: left;
+}
+
+.objectives-page h1 {
+  margin: 0 0 var(--space-4);
+}
+
+.objectives-page .error {
+  color: var(--danger);
+  margin: var(--space-2) 0;
+}
+
+/* form */
+.objective-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.objective-form h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.objective-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 14px;
+  flex: 1;
+}
+
+.objective-form input,
+.objective-form textarea,
+.card-actions input {
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.objective-form input:focus,
+.objective-form textarea:focus,
+.card-actions input:focus {
+  outline: 2px solid var(--primary-soft);
+  border-color: var(--primary);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.objectives-page button {
+  padding: 8px 14px;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+}
+
+.objectives-page button:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.objectives-page button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* list */
+.objectives-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.objective-card {
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.objective-card p {
+  margin: var(--space-2) 0;
+}
+
+.dates {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.card-actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-3);
+}
+
+.card-actions input {
+  width: 80px;
+  padding: 6px;
+}
+
+/* progress bar */
+.progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--success);
+  transition: width 0.3s;
+}
+
+/* status badges: the class name is "badge-" + the status text from the API.
+   The shape of .badge comes from theme.css, here we only set the color. */
+.badge-Draft { background: var(--neutral); }
+.badge-PendingApproval { background: var(--warning); }
+.badge-Approved { background: var(--success); }
+.badge-Rejected { background: var(--danger); }
+.badge-InProgress { background: var(--info); }
+.badge-Completed { background: var(--purple); }
