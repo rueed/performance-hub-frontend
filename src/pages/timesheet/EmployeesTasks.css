@@ -1,0 +1,159 @@
+/* =========================
+   EMPLOYEES TASKS PAGE
+========================= */
+
+.employees-tasks {
+  padding: var(--space-5);
+  width: 100%;
+}
+
+.employees-tasks h1 {
+  color: var(--text);
+  font-size: 28px;
+  margin-bottom: var(--space-2);
+}
+
+.employees-tasks > p {
+  color: var(--text-muted);
+  margin-bottom: var(--space-5);
+}
+
+/* =========================
+   EMPLOYEE CARD
+========================= */
+
+.employees-tasks .employee-card {
+  background-color: var(--surface);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.employees-tasks .employee-card h2 {
+  color: var(--text);
+  font-size: 20px;
+  margin-bottom: var(--space-4);
+}
+
+.employees-tasks .employee-card h3 {
+  color: var(--text);
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-3);
+}
+
+.employees-tasks .employee-card > p {
+  color: var(--text-muted);
+  margin: var(--space-2) 0;
+}
+
+/* =========================
+   INDIVIDUAL TASK
+========================= */
+
+.employees-tasks .task-item {
+  background-color: var(--primary-soft);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+}
+
+.employees-tasks .task-item h4 {
+  color: var(--text);
+  margin: 0 0 var(--space-2);
+  font-size: 16px;
+}
+
+.employees-tasks .task-item p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: var(--space-1) 0;
+}
+
+/* =========================
+   APPROVE AND REJECT BUTTONS
+========================= */
+
+.employees-tasks .review-buttons {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.employees-tasks .review-buttons button {
+  padding: 11px 25px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.employees-tasks .approve-button {
+  background-color: var(--success);
+  color: white;
+}
+
+.employees-tasks .approve-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.employees-tasks .reject-button {
+  background-color: var(--danger);
+  color: white;
+}
+
+.employees-tasks .reject-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   EMPTY AND ERROR MESSAGES
+========================= */
+
+.employees-tasks .empty-message {
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-5);
+  background-color: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.employees-tasks .error-message {
+  color: var(--danger);
+  padding: var(--space-4);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 600px) {
+  .employees-tasks {
+    padding: var(--space-3);
+  }
+
+  .employees-tasks .employee-card {
+    padding: var(--space-4);
+  }
+
+  .employees-tasks .review-buttons {
+    flex-direction: column;
+  }
+
+  .employees-tasks .review-buttons button {
+    width: 100%;
+  }
+}

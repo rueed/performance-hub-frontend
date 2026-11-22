@@ -17,7 +17,7 @@ const services = [
     icon: 'time',
     description:
       'Track and manage working hours and timesheet activities.',
-    destination: null,
+    destination: '/timesheet',
   },
 ];
 
