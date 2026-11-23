@@ -36,7 +36,8 @@ function TeamEvaluationsPage() {
   }
 
   // runs once, after the first render
-  useEffect(() => {
+   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadAll();
   }, []);
 

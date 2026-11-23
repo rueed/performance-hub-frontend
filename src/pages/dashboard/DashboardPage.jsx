@@ -9,8 +9,6 @@ const STATUSES = [
   { value: 'PendingApproval', label: 'Pending approval' },
   { value: 'Approved', label: 'Approved' },
   { value: 'Rejected', label: 'Rejected' },
-  { value: 'InProgress', label: 'In progress' },
-  { value: 'Completed', label: 'Completed' },
 ];
 
 // Employee dashboard: numbers about MY objectives.
@@ -34,10 +32,6 @@ function DashboardPage() {
     load();
   }, []);
 
-  const total = objectives.length;
-  const totalProgress = objectives.reduce((sum, o) => sum + o.progress, 0);
-  const averageProgress = total === 0 ? 0 : Math.round(totalProgress / total);
-
   return (
     <div className="page">
       <h1>My Dashboard</h1>
@@ -46,25 +40,16 @@ function DashboardPage() {
       {loading && <p className="muted-text">Loading...</p>}
 
       {!loading && (
-        <>
-          <div className="stat-grid">
-            <StatCard label="Total objectives" value={total} />
-            {STATUSES.map((status) => (
-              <StatCard
-                key={status.value}
-                label={status.label}
-                value={objectives.filter((o) => o.status === status.value).length}
-              />
-            ))}
-          </div>
-
-          <div className="card">
-            <p className="muted-text">Overall progress: {averageProgress}%</p>
-            <div className="overall-bar">
-              <div className="overall-fill" style={{ width: `${averageProgress}%` }} />
-            </div>
-          </div>
-        </>
+        <div className="stat-grid">
+          <StatCard label="Total objectives" value={objectives.length} />
+          {STATUSES.map((status) => (
+            <StatCard
+              key={status.value}
+              label={status.label}
+              value={objectives.filter((o) => o.status === status.value).length}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

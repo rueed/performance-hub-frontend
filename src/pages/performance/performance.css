@@ -39,3 +39,45 @@
 .home-service-action {
   text-decoration: none;
 }
+.perf-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+.perf-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 180px;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.perf-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.perf-card h3 {
+  margin: 0;
+}
+
+.perf-card p {
+  margin: 0;
+  color: var(--muted, #6b7280);
+}
+
+.perf-card-go {
+  margin-top: auto;
+  color: var(--primary);
+  font-weight: 600;
+}

@@ -138,19 +138,9 @@
   padding: 6px;
 }
 
-/* progress bar */
-.progress-bar {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--border);
-  overflow: hidden;
-}
 
-.progress-fill {
-  height: 100%;
-  background: var(--success);
-  transition: width 0.3s;
-}
+
+
 
 /* status badges: the class name is "badge-" + the status text from the API.
    The shape of .badge comes from theme.css, here we only set the color. */
@@ -158,5 +148,207 @@
 .badge-PendingApproval { background: var(--warning); }
 .badge-Approved { background: var(--success); }
 .badge-Rejected { background: var(--danger); }
-.badge-InProgress { background: var(--info); }
 .badge-Completed { background: var(--purple); }
+.objectives-page .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.objectives-page .card-title h2 {
+  margin: 0;
+}
+
+.objectives-page .muted {
+  color: var(--muted, #6b7280);
+  font-size: 14px;
+  margin: 4px 0 var(--space-3);
+}
+
+.objectives-page .notice {
+  background: #e8f7ee;
+  color: #146c3c;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--primary);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-link {
+  background: none;
+  border: 0;
+  color: #c0392b;
+  cursor: pointer;
+}
+
+.batch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-3);
+}
+
+.batch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.batch-item .muted {
+  display: block;
+  margin: 2px 0 0;
+}
+.objectives-page {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.objectives-page .card,
+.objectives-page .objective-form {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.objectives-page .objective-form input,
+.objectives-page .objective-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+.objectives-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+/* The stacked objective cards use the same look as the old "Create objective" card
+   (the classes "card objective-form"), so only the layout between them is set here. */
+.slots-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.slots-grid .objective-form {
+  margin-bottom: 0;
+}
+
+.slot-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.slot-head .card-title p {
+  margin: 4px 0 0;
+}
+
+.slot-head-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.objectives-page .btn-link {
+  background: none;
+  color: var(--danger);
+  padding: 0;
+}
+
+.objectives-page .btn-link:hover:not(:disabled) {
+  background: none;
+  text-decoration: underline;
+}
+
+.objectives-page .btn-added:hover:not(:disabled) {
+  background: var(--success);
+}
+
+.submit-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+.objectives-page .btn-outline {
+  background: transparent;
+  color: var(--primary, #4f6bff);
+  border: 1px solid var(--primary, #4f6bff);
+}
+
+.objectives-page .btn-outline:hover:not(:disabled) {
+  background: var(--primary, #4f6bff);
+  color: #fff;
+}
+
+.bar-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.reject-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  border-left: 4px solid var(--danger);
+  margin-bottom: var(--space-4);
+}
+
+.reject-banner p {
+  margin: 4px 0 0;
+}
+
+.objectives-page .notice {
+  color: var(--success);
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.title-row h1 {
+  margin: 0;
+}
