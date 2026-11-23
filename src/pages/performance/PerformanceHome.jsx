@@ -18,7 +18,6 @@ export default function PerformanceHome() {
         // if it fails, the card keeps its default name
       }
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     check();
   }, []);
 

@@ -17,36 +17,10 @@ export function createObjective(data) {
   });
 }
 
-// POST /api/objectives/{id}/submit  (Draft or Rejected -> PendingApproval)
-export function submitObjective(id) {
-  return apiRequest(`/api/objectives/${id}/submit`, { method: 'POST' });
-}
 
-// PATCH /api/objectives/{id}/progress  body: { progress: 0-100 }
-export function updateProgress(id, progress) {
-  return apiRequest(`/api/objectives/${id}/progress`, {
-    method: 'PATCH',
-    body: JSON.stringify({ progress }),
-  });
-}
 
-// GET /api/objectives/pending  (Manager only: objectives of my team waiting for approval)
-export function getPendingObjectives() {
-  return apiRequest('/api/objectives/pending');
-}
 
-// POST /api/objectives/{id}/approve  (Manager only)
-export function approveObjective(id) {
-  return apiRequest(`/api/objectives/${id}/approve`, { method: 'POST' });
-}
 
-// POST /api/objectives/{id}/reject  body: { reason }  (Manager only)
-export function rejectObjective(id, reason) {
-  return apiRequest(`/api/objectives/${id}/reject`, {
-    method: 'POST',
-    body: JSON.stringify({ reason }),
-  });
-}
 
 // GET /api/objectives/team  (Manager only: all objectives of my team, any status)
 export function getTeamObjectives() {
@@ -68,3 +42,17 @@ export function submitDrafts(ids) {
     body: JSON.stringify({ ids }),
   });
 }
+  export function approveTeamMember(userId) {
+  return apiRequest(`/api/objectives/team/${userId}/approve`, {
+    method: 'POST',
+  });}
+  export function rejectTeamMember(userId, reason) {
+  return apiRequest(`/api/objectives/team/${userId}/reject`, {
+    method: 'POST',
+    reason: JSON.stringify({ reason }),
+  });
+}
+export function resubmitRejected() {
+  return apiRequest(`/api/objectives/resubmit-rejected`, {
+    method: 'POST',
+  });}

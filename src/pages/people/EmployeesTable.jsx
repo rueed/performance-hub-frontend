@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import EmployeePopup from './EmployeePopup';
 import './people.css';
 
-const POPUP_HEIGHT = 360;
+const POPUP_MAX = 420;
 
 // Table of employees. Hovering a row opens a popup with that employee's objectives.
 function EmployeesTable({
@@ -26,14 +26,21 @@ function EmployeesTable({
     timer.current = setTimeout(() => setOpen(null), 250);
   }
 
-  function openFor(employee, event) {
+   function openFor(employee, event) {
     cancelClose();
     const rect = event.currentTarget.getBoundingClientRect();
-    const fitsBelow = rect.bottom + POPUP_HEIGHT < window.innerHeight;
+    const spaceBelow = window.innerHeight - rect.bottom - 16;
+    const spaceAbove = rect.top - 16;
+
+    // normally below the row; above only when there is clearly more room there
+    const below = spaceBelow >= 220 || spaceBelow >= spaceAbove;
+    const maxHeight = Math.min(POPUP_MAX, below ? spaceBelow : spaceAbove);
+
     setOpen({
       employee,
-      top: fitsBelow ? rect.bottom + 4 : Math.max(8, rect.top - POPUP_HEIGHT - 4),
-      left: rect.left,
+      style: below
+        ? { top: rect.bottom + 4, left: rect.left, maxHeight }
+        : { bottom: window.innerHeight - rect.top + 4, left: rect.left, maxHeight },
     });
   }
 
@@ -41,11 +48,7 @@ function EmployeesTable({
     return objectives.filter((o) => o.userId === employee.id);
   }
 
-  function averageProgress(list) {
-    if (list.length === 0) return 0;
-    const sum = list.reduce((total, o) => total + (o.progress ?? 0), 0);
-    return Math.round(sum / list.length);
-  }
+
 
   if (employees.length === 0) {
     return <div className="card"><p className="muted">No employees to show.</p></div>;
@@ -61,14 +64,12 @@ function EmployeesTable({
             {showOrg && <th>Manager</th>}
             <th>Objectives</th>
             <th>Pending</th>
-            <th>Average progress</th>
           </tr>
         </thead>
         <tbody>
           {employees.map((employee) => {
             const list = objectivesOf(employee);
             const pending = list.filter((o) => o.status === 'PendingApproval').length;
-            const avg = averageProgress(list);
             return (
               <tr
                 key={employee.id}
@@ -84,12 +85,7 @@ function EmployeesTable({
                 {showOrg && <td>{employee.managerName || '-'}</td>}
                 <td>{list.length}</td>
                 <td>{pending}</td>
-                <td>
-                  <div className="mini-bar">
-                    <div className="mini-bar-fill" style={{ width: `${avg}%` }} />
-                  </div>
-                  <span className="muted">{avg}%</span>
-                </td>
+                
               </tr>
             );
           })}
@@ -103,7 +99,7 @@ function EmployeesTable({
           canReview={canReview}
           onApprove={onApprove}
           onReject={onReject}
-          style={{ top: open.top, left: open.left }}
+          style={open.style}
           onEnter={cancelClose}
           onLeave={scheduleClose}
         />

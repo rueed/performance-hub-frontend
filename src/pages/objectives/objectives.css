@@ -138,19 +138,9 @@
   padding: 6px;
 }
 
-/* progress bar */
-.progress-bar {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--border);
-  overflow: hidden;
-}
 
-.progress-fill {
-  height: 100%;
-  background: var(--success);
-  transition: width 0.3s;
-}
+
+
 
 /* status badges: the class name is "badge-" + the status text from the API.
    The shape of .badge comes from theme.css, here we only set the color. */
@@ -158,7 +148,6 @@
 .badge-PendingApproval { background: var(--warning); }
 .badge-Approved { background: var(--success); }
 .badge-Rejected { background: var(--danger); }
-.badge-InProgress { background: var(--info); }
 .badge-Completed { background: var(--purple); }
 .objectives-page .card {
   background: var(--surface);
@@ -308,10 +297,6 @@
   text-decoration: underline;
 }
 
-.objectives-page .btn-added {
-  background: var(--success);
-}
-
 .objectives-page .btn-added:hover:not(:disabled) {
   background: var(--success);
 }
@@ -322,4 +307,48 @@
   justify-content: space-between;
   align-items: center;
   gap: var(--space-3);
+}
+.objectives-page .btn-outline {
+  background: transparent;
+  color: var(--primary, #4f6bff);
+  border: 1px solid var(--primary, #4f6bff);
+}
+
+.objectives-page .btn-outline:hover:not(:disabled) {
+  background: var(--primary, #4f6bff);
+  color: #fff;
+}
+
+.bar-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.reject-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  border-left: 4px solid var(--danger);
+  margin-bottom: var(--space-4);
+}
+
+.reject-banner p {
+  margin: 4px 0 0;
+}
+
+.objectives-page .notice {
+  color: var(--success);
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.title-row h1 {
+  margin: 0;
 }

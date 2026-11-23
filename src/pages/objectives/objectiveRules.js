@@ -1,4 +1,4 @@
-// Shared rules for the objective forms (used by the page and by the list).
+// Rules shared by the objectives pages.
 export const MIN_OBJECTIVES = 3;
 
 export const emptySlot = {
@@ -7,28 +7,32 @@ export const emptySlot = {
   description: '',
   startDate: '',
   endDate: '',
-  added: false, // true after the Add button: it will be part of the submission
 };
 
-// "2026-11-15T00:00:00" -> "2026-11-15" (what <input type="date"> expects)
+// the backend sends dates like 2026-11-25T00:00:00Z, the date input needs 2026-11-25
 export function toDateInput(value) {
-  return value ? value.slice(0, 10) : '';
+  return value ? String(value).slice(0, 10) : '';
 }
 
-// Returns an error message, or '' when the objective is valid.
+// a card the user did not write anything in
+export function isBlank(slot) {
+  return (
+    !slot.title.trim() &&
+    !slot.description.trim() &&
+    !slot.startDate &&
+    !slot.endDate
+  );
+}
+
+// returns an error message, or '' when the card is fine
 export function validateSlot(slot) {
-  if (!slot.title.trim()) return 'Title is required';
-  if (!slot.startDate || !slot.endDate) {
-    return 'Start date and end date are required';
-  }
-  // "YYYY-MM-DD" strings compare correctly as plain text
-  if (slot.endDate <= slot.startDate) {
-    return 'End date must be after the start date';
-  }
+  if (!slot.title.trim()) return 'Please write a title.';
+  if (!slot.startDate || !slot.endDate) return 'Please choose the start and end dates.';
+  if (slot.endDate <= slot.startDate) return 'The end date must be after the start date.';
   return '';
 }
 
-// The shape the backend expects (a full UTC date-time).
+// the shape the API expects
 export function toPayload(slot) {
   return {
     title: slot.title.trim(),

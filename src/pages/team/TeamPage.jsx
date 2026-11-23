@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { getTeamMembers } from '../../api/evaluationsApi'; // <- see the note below
 import {
   getTeamObjectives,
-  approveObjective,
-  rejectObjective,
+  approveTeamMember,
+  rejectTeamMember,
 } from '../../api/objectivesApi';
 import EmployeesTable from '../people/EmployeesTable';
 
@@ -36,16 +36,15 @@ function TeamPage() {
     load();
   }, []);
 
-  async function handleApprove(id) {
-    await approveObjective(id);
+  async function handleApprove(userId) {
+    await approveTeamMember(userId);
     await load();
   }
 
-  async function handleReject(id, reason) {
-    await rejectObjective(id, reason);
+  async function handleReject(userId, reason) {
+    await rejectTeamMember(userId, reason);
     await load();
   }
-
   return (
     <div>
       <h1>My team</h1>
