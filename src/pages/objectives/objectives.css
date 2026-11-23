@@ -267,3 +267,59 @@
   padding: 0;
   list-style: none;
 }
+/* The stacked objective cards use the same look as the old "Create objective" card
+   (the classes "card objective-form"), so only the layout between them is set here. */
+.slots-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.slots-grid .objective-form {
+  margin-bottom: 0;
+}
+
+.slot-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.slot-head .card-title p {
+  margin: 4px 0 0;
+}
+
+.slot-head-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.objectives-page .btn-link {
+  background: none;
+  color: var(--danger);
+  padding: 0;
+}
+
+.objectives-page .btn-link:hover:not(:disabled) {
+  background: none;
+  text-decoration: underline;
+}
+
+.objectives-page .btn-added {
+  background: var(--success);
+}
+
+.objectives-page .btn-added:hover:not(:disabled) {
+  background: var(--success);
+}
+
+.submit-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}

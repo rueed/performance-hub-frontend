@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import ObjectiveSlot from './ObjectiveSlot';
+import { toDateInput, validateSlot, toPayload } from './objectiveRules';
 
-// The backend sends the status as text (see the JSON enum setting in Program.cs).
 const STATUS_LABELS = {
   Draft: 'Draft',
   PendingApproval: 'Pending approval',
@@ -10,94 +11,134 @@ const STATUS_LABELS = {
   Completed: 'Completed',
 };
 
-// "2026-11-15T00:00:00" -> "2026-11-15"
-function formatDate(value) {
-  return value.slice(0, 10);
-}
+// One submitted objective. It uses the same card as the "Submit objectives" page,
+// but the fields are read-only. Progress and edit buttons depend on the status.
+function ObjectiveCard({ objective, busy, onProgress, onResubmit }) {
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState(null);
+  const [error, setError] = useState('');
+  const [progress, setProgress] = useState(objective.progress ?? 0);
 
-function ObjectiveCard({ objective, onSubmit, onProgress }) {
-  const [progress, setProgress] = useState(objective.progress);
-
-  // Business rules from docs/contract.md, section 6
-  const canSubmit =
-    objective.status === 'Draft' || objective.status === 'Rejected';
   const canUpdateProgress =
     objective.status === 'Approved' || objective.status === 'InProgress';
+  const isRejected = objective.status === 'Rejected';
 
-  function handleProgressClick() {
-    // keep the value between 0 and 100
-    const value = Math.min(100, Math.max(0, Number(progress) || 0));
-    setProgress(value);
-    onProgress(objective.id, value);
+  const shownValue = editing
+    ? form
+    : {
+        id: objective.id,
+        title: objective.title,
+        description: objective.description || '',
+        startDate: toDateInput(objective.startDate),
+        endDate: toDateInput(objective.endDate),
+        added: false,
+      };
+
+  function startEdit() {
+    setForm({ ...shownValue });
+    setError('');
+    setEditing(true);
+  }
+
+  async function saveAndResubmit() {
+    const message = validateSlot(form);
+    if (message) {
+      setError(message);
+      return;
+    }
+    const ok = await onResubmit(objective.id, toPayload(form));
+    if (ok) setEditing(false);
   }
 
   return (
-    <li className="objective-card">
-      <div className="card-header">
-        <h3>{objective.title}</h3>
-        <span className={`badge badge-${objective.status}`}>
-          {STATUS_LABELS[objective.status] ?? objective.status}
-        </span>
-      </div>
-
-      {objective.description && <p>{objective.description}</p>}
-
-      <p className="dates">
-        {formatDate(objective.startDate)} to {formatDate(objective.endDate)}
-      </p>
-
-      {objective.status === 'Rejected' && objective.rejectionReason && (
+    <ObjectiveSlot
+      heading="Objective"
+      badge={STATUS_LABELS[objective.status] || objective.status}
+      badgeClass={`badge-${objective.status}`}
+      value={shownValue}
+      error={error}
+      disabled={!editing || busy}
+      onChange={editing ? setForm : () => {}}
+    >
+      {isRejected && objective.rejectionReason && (
         <p className="error">Rejected: {objective.rejectionReason}</p>
       )}
 
-      <div className="progress-bar" aria-label="Progress">
+      <div className="progress-track">
         <div
           className="progress-fill"
-          style={{ width: `${objective.progress}%` }}
+          style={{ width: `${objective.progress ?? 0}%` }}
         />
       </div>
-      <p className="dates">{objective.progress}% done</p>
+      <p className="muted">{objective.progress ?? 0}% done</p>
 
-      <div className="card-actions">
-        {canSubmit && (
-          <button onClick={() => onSubmit(objective.id)}>
-            Submit for approval
+      {canUpdateProgress && (
+        <div className="form-actions">
+          <input
+            type="number"
+            min="0"
+            max="100"
+            value={progress}
+            onChange={(e) => setProgress(Number(e.target.value))}
+            disabled={busy}
+          />
+          <button
+            type="button"
+            className="btn-primary"
+            disabled={busy}
+            onClick={() => onProgress(objective.id, progress)}
+          >
+            Update progress
           </button>
-        )}
+        </div>
+      )}
 
-        {canUpdateProgress && (
-          <>
-            <input
-              type="number"
-              min={0}
-              max={100}
-              value={progress}
-              onChange={(event) => setProgress(event.target.value)}
-            />
-            <button onClick={handleProgressClick}>Update progress</button>
-          </>
-        )}
-      </div>
-    </li>
+      {isRejected && !editing && (
+        <div className="form-actions">
+          <button type="button" className="btn-primary" onClick={startEdit}>
+            Edit and resubmit
+          </button>
+        </div>
+      )}
+
+      {editing && (
+        <div className="form-actions">
+          <button
+            type="button"
+            className="btn-primary"
+            disabled={busy}
+            onClick={saveAndResubmit}
+          >
+            Save and resubmit
+          </button>
+          <button
+            type="button"
+            className="btn-link"
+            onClick={() => setEditing(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+    </ObjectiveSlot>
   );
 }
 
-function ObjectivesList({ objectives, onSubmit, onProgress }) {
-  if (objectives.length === 0) {
-    return <p>No objectives yet. Create your first one above.</p>;
-  }
+function ObjectivesList({ objectives, busy, onProgress, onResubmit }) {
+  const sorted = [...objectives].sort((a, b) => a.id - b.id);
 
   return (
-    <ul className="objectives-list">
-      {objectives.map((objective) => (
+    <div className="slots-grid">
+      {sorted.map((objective) => (
         <ObjectiveCard
           key={objective.id}
           objective={objective}
-          onSubmit={onSubmit}
+          busy={busy}
           onProgress={onProgress}
+          onResubmit={onResubmit}
         />
       ))}
-    </ul>
+    </div>
   );
 }
 

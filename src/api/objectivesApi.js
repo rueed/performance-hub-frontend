@@ -52,3 +52,19 @@ export function rejectObjective(id, reason) {
 export function getTeamObjectives() {
   return apiRequest('/api/objectives/team');
 }
+
+// PUT /api/objectives/{id}  (Draft or Rejected only)
+export function updateObjective(id, data) {
+  return apiRequest(`/api/objectives/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+// POST /api/objectives/submit-drafts  (sends all my drafts together, at least 3)
+// POST /api/objectives/submit-drafts  body: { ids }  (at least 3, sent together)
+export function submitDrafts(ids) {
+  return apiRequest('/api/objectives/submit-drafts', {
+    method: 'POST',
+    body: JSON.stringify({ ids }),
+  });
+}
